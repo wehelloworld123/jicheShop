@@ -4,10 +4,38 @@ spring:
   application:
     name: e-commerce-basicInfo
   datasource:
-    url: # 你的数据库地址
-    username: # 你的数据库用户名
-    password: # 你的数据库密码
     type: com.alibaba.druid.pool.DruidDataSource
+#     driver-class-name: com.mysql.cj.jdbc.Driver
+#     druid:
+#       master:
+    url: jdbc:mysql://81.68.128.124:3306/jiche_shop?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    username: shopadm
+    password: W1j2y3x4y5.
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    initial-size: 10
+    max-active: 50
+    min-idle: 10
+    max-wait: 5000
+    pool-prepared-statements: true
+    max-pool-prepared-statement-per-connection-size: 20
+    validation-query: SELECT 1 FROM DUAL
+    validation-query-timeout: 20000
+    test-on-borrow: false
+    test-on-return: false
+    test-while-idle: true
+    time-between-eviction-runs-millis: 60000
+    min-evictable-idle-time-millis: 300000
+    stat-view-servlet:
+      enabled: true
+      url-pattern: /druid/*
+    filter:
+      stat:
+        log-slow-sql: true
+        slow-sql-millis: 1000
+        merge-sql: true
+      wall:
+        config:
+          multi-statement-allow: true
   redis:
     host: 81.68.128.124 # Redis服务器地址
     database: 1 # Redis数据库索引（默认为0）
