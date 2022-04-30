@@ -1,41 +1,13 @@
 server:
-  port: 9050
+  port: 9040
 spring:
   application:
-    name: e-commerce-wallet
+    name: e-commerce-product
   datasource:
+    url: # 你的数据库地址
+    username: # 你的数据库用户名
+    password: # 你的数据库密码
     type: com.alibaba.druid.pool.DruidDataSource
-#     driver-class-name: com.mysql.cj.jdbc.Driver
-#     druid:
-#       master:
-    url: jdbc:mysql://81.68.128.124:3306/jiche_shop?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
-    username: shopadm
-    password: W1j2y3x4y5.
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    initial-size: 10
-    max-active: 50
-    min-idle: 10
-    max-wait: 5000
-    pool-prepared-statements: true
-    max-pool-prepared-statement-per-connection-size: 20
-    validation-query: SELECT 1 FROM DUAL
-    validation-query-timeout: 20000
-    test-on-borrow: false
-    test-on-return: false
-    test-while-idle: true
-    time-between-eviction-runs-millis: 60000
-    min-evictable-idle-time-millis: 300000
-    stat-view-servlet:
-      enabled: true
-      url-pattern: /druid/*
-    filter:
-      stat:
-        log-slow-sql: true
-        slow-sql-millis: 1000
-        merge-sql: true
-      wall:
-        config:
-          multi-statement-allow: true
   redis:
     host: 81.68.128.124 # Redis服务器地址
     database: 1 # Redis数据库索引（默认为0）
@@ -58,8 +30,38 @@ eureka:
 mybatis:
   mapper-locations: classpath*:mapper/*.xml
 
-value:
-  zuul-uri: "http://e-commerce-zuul"
+#腾讯云配置
+tencent:
+  appId: 1400454235
+  # 腾讯云的SecretId（永久的，可在控制台开启或关闭）
+  secretId: AKIDGJOxKVR5bCYfW883hHWXHlmZ5KbmN9RV
+  # 腾讯云的SecretKey（永久的，可在控制台开启或关闭）
+  secretKey: lHWfavNddZIlxIWZNvDtJafWMwHMONCl
+  # 腾讯云的allowPrefix(允许上传的路径)
+  allowPrefix: '*'
+  # 腾讯云的访问基础链接:
+  baseUrl: https://ithink-1303188565.cos.ap-shanghai.myqcloud.com
+  # 腾讯云的cdn访问链接:
+  cdnUrl: https://vvvpure.com
+  # 腾讯云的bucket (存储桶)
+  bucket: ithink-1303188565
+  # 腾讯云的临时密钥时长(单位秒)
+  durationSeconds: 1800
+  # 腾讯云的region(bucket所在地区)
+  region: ap-shanghai
+# OSS相关配置信息
+aliyun:
+  oss:
+    endpoint: oss-cn-beijing.aliyuncs.com # oss对外服务的访问域名
+    accessKeyId: xxx # 访问身份验证中用到用户标识
+    accessKeySecret: xxx # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
+    bucketName: e-commerce-oss # oss的存储空间
+    policy:
+      expire: 300 # 签名有效期(S)
+    maxSize: 5 # 上传文件大小(M)
+    callback: http://cpud72t9.xiaomy.net/aliyun/oss/callback # 文件上传成功后的回调地址
+    dir:
+      prefix: images/ # 上传文件夹路径前缀
 
 secure:
   ignored:
@@ -77,21 +79,11 @@ secure:
       - /actuator/**
       - /sso/**
       - /home/**
+      - /aliyun/oss/callback
+      - /upload/uploadImage
 
 jwt:
   tokenHeader: Authorization #JWT存储的请求头
   secret: e-commerce-admin #JWT加解密使用的密钥
   expiration: 604800 #JWT的超期限时间(60*60*24)
   tokenHead: Bearer #JWT负载中拿到开头
-
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 60000
-
-ribbon:
-  ConnectTimeout: 3000
-  ReadTimeout: 60000
