@@ -109,7 +109,7 @@ secure:
       - /sso/**
       - /home/**
       - /log/generateValidateCode
-      - /
+      - /index
 
 jwt:
   tokenHeader: Authorization #JWT存储的请求头
