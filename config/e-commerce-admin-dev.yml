@@ -146,6 +146,7 @@ secure:
       - /**/*.png
       - /**/*.ico
       - /webjars/springfox-swagger-ui/**
+      - /static/**
       - /druid/**
       - /actuator/**
       - /sso/**
